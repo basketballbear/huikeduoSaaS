@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品详情页</title>
+    <!-- 引入 Font Awesome 6 免费版 CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* 商品信息 */
+        .product-info {
+            padding: 15px;
+            background-color: #fff;
+        }
+
+        .product-info .price-group-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .product-info .price-group {
+            display: flex;
+            align-items: baseline;
+        }
+
+        .product-info .price {
+            color: #ff5000;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: flex;
+        }
+
+        .product-info .original-price {
+            color: #999;
+            font-size: 14px;
+            text-decoration: line-through;
+            margin-left: 10px;
+        }
+
+        .product-info .title {
+            font-size: 18px;
+            line-height: 1.4;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .product-info .sales {
+            color: #999;
+            font-size: 13px;
+        }
+        
+
+        .promo-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .promo-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .promo-item .tag {
+            background-color: #ff5000;
+            color: #fff;
+            font-size: 12px;
+            padding: 2px 5px;
+            border-radius: 3px;
+            margin-right: 8px;
+        }
+
+        .promo-item .text {
+            font-size: 14px;
+            color: #333;
+        }
+
+        /* 商品详情内容 */
+        .detail-content {
+            padding: 15px;
+            background-color: #fff;
+        }
+
+        .detail-content img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .detail-content p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        /* Tab内容区域样式 */
+        .tab-content {
+            display: none;
+            background-color: #fff;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* 评价内容样式 */
+        .review-content {
+            padding: 15px;
+        }
+
+        .review-item {
+            border-bottom: 1px solid #eee;
+            padding: 15px 0;
+        }
+
+        .review-item:last-child {
+            border-bottom: none;
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .reviewer-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #f0f0f0;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 14px;
+        }
+
+        .reviewer-info {
+            flex-grow: 1;
+        }
+
+        .reviewer-name {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 2px;
+        }
+
+        .review-date {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .review-rating {
+            color: #ff5000;
+            font-size: 12px;
+        }
+
+        .review-text {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .review-images {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .review-image {
+            width: 60px;
+            height: 60px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 12px;
+        }
+
+        /* 推荐内容样式 */
+        .recommend-content {
+            padding: 15px;
+        }
+
+        .recommend-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .recommend-item {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: #fff;
+        }
+
+        .recommend-item img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+        }
+
+        .recommend-info {
+            padding: 8px;
+        }
+
+        .recommend-name {
+            font-size: 13px;
+            color: #333;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            line-height: 1.3;
+            margin-bottom: 4px;
+        }
+
+        .recommend-price {
+            font-size: 16px;
+            color: #ff5000;
+            font-weight: bold;
+        }
+
+        /* 底部操作栏 */
+        .footer-actions {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 0;
+            border-top: 1px solid #eee;
+            background-color: #fff;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            max-width: 750px;
+            /* 模拟手机淘宝宽度 */
+            box-sizing: border-box;
+        }
+
+        .footer-actions .action-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #666;
+            font-size: 12px;
+        }
+
+        .footer-actions .action-item .icon {
+            font-size: 22px;
+            margin-bottom: 3px;
+        }
+
+        .footer-actions .buy-button {
+            background-color: #ff5000;
+            color: #fff;
+            padding: 10px 30px;
+            border-radius: 20px;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            flex-grow: 1;
+            margin: 0 10px;
+        }
+
+        .footer-actions .add-to-cart-button {
+            background-color: #ff9000;
+            color: #fff;
+            padding: 10px 30px;
+            border-radius: 20px;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            flex-grow: 1;
+            margin: 0 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 顶部导航 -->
+    <div class="group-buy-header">
+        <button class="back-button-whitebg" onclick="history.back()">
+            <i class="fa-solid fa-arrow-left"></i>
+        </button>
+        <h2 class="page-title">商品详情</h2>
+        <div class="header-actions">
+            <button class="favorite-button" id="favoriteBtn" onclick="toggleFavorite()">
+                <i class="fa-regular fa-star" id="favoriteIcon"></i>
+            </button>
+            <button class="share-button">
+                <i class="fa-solid fa-share-nodes"></i>
+            </button>
+            <button class="cart-button" onclick="window.location.href='cart.html'">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span class="cart-badge" id="cartItemCount">0</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="product-detail-container">
+        <!-- 商品轮播图 -->
+        <div class="carousel-container">
+            <div class="carousel-slides">
+                <img src="product.jpg" alt="团购商品图片" class="product-image">
+                <img src="product2.jpg" alt="团购商品图片" class="product-image">
+                <img src="product3.jpg" alt="团购商品图片" class="product-image">
+            </div>
+            <div class="carousel-dots"></div>
+        </div>
+
+        <!-- 商品信息 -->
+        <div class="product-info">
+            <div class="price-group-container">
+                <div class="price-group">
+                    <span class="group-price">¥99.00</span>
+                    <span class="original-price">¥199.00</span>
+                </div>
+                <div class="sales">月销1000+</div>
+            </div>
+            <div class="title">示例电商商品名称，这是一个较长的商品名称</div>
+            <!-- 规格选择区 -->
+            <div class="spec-select-row"
+                style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #eee; font-size: 15px;">
+                <div class="selected-spec" style="color: #333;">已选：<span id="selectedSpec">规格名称很长很长很长很长</span></div>
+                <div class="spec-count" style="color: #999; display: flex; align-items: center;">
+                    共3款
+                    <i class="fa-solid fa-angle-right" style="margin-left: 6px;"></i>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 优惠券/活动 -->
+        <div class="section-container">
+            <div class="promo-item">
+                <span class="tag">优惠</span>
+                <span class="text">满200减20，满300减30</span>
+            </div>
+            <div class="promo-item">
+                <span class="tag">活动</span>
+                <span class="text">新人专享，首单立减10元</span>
+            </div>
+        </div>
+
+        <!-- 商家信息 -->
+        <div class="section-container" style="display: flex; flex-direction: row; align-items: center;">
+            <img src="shop.jpg" alt="商家图片" style="width: 48px; height: 48px; margin-right: 10px;">
+            <div class="result-info">
+                <div class="result-name">示例商家名称</div>
+                <div class="result-tags">
+                    <span class="result-tag">商家标签1</span>
+                </div>
+            </div>
+            <a href="#" class="shop-link">进店</a>
+        </div>
+
+        <!-- 评价/详情/推荐 Tab -->
+        <div class="tabs">
+            <div class="tab-item active" data-tab="detail">商品详情</div>
+            <div class="tab-item" data-tab="review">累计评价</div>
+            <div class="tab-item" data-tab="recommend">推荐</div>
+        </div>
+
+        <!-- 商品详情内容 -->
+        <div class="tab-content active" id="detail-content">
+            <div class="detail-content">
+                <img src="product2.jpg" alt="详情图1">
+                <p>这款运动鞋采用高品质材料，轻便透气，穿着舒适。时尚设计，适合日常休闲和运动穿着。</p>
+                <img src="product3.jpg" alt="详情图2">
+                <p>鞋底采用防滑耐磨橡胶，提供卓越的抓地力。多种颜色可选，满足您的个性需求。</p>
+            </div>
+        </div>
+
+        <!-- 评价内容 -->
+        <div class="tab-content" id="review-content">
+            <div class="review-content">
+                <div class="review-item">
+                    <div class="review-header">
+                        <div class="reviewer-avatar">张</div>
+                        <div class="reviewer-info">
+                            <div class="reviewer-name">张**</div>
+                            <div class="review-date">2024-01-15</div>
+                        </div>
+                        <div class="review-rating">★★★★★</div>
+                    </div>
+                    <div class="review-text">鞋子质量很好，穿着很舒服，颜色也很正，值得推荐！</div>
+                    <div class="review-images">
+                        <div class="review-image">图片1</div>
+                        <div class="review-image">图片2</div>
+                    </div>
+                </div>
+                <div class="review-item">
+                    <div class="review-header">
+                        <div class="reviewer-avatar">李</div>
+                        <div class="reviewer-info">
+                            <div class="reviewer-name">李**</div>
+                            <div class="review-date">2024-01-10</div>
+                        </div>
+                        <div class="review-rating">★★★★☆</div>
+                    </div>
+                    <div class="review-text">整体不错，就是尺码稍微偏小一点，建议买大一码。</div>
+                </div>
+                <div class="review-item">
+                    <div class="review-header">
+                        <div class="reviewer-avatar">王</div>
+                        <div class="reviewer-info">
+                            <div class="reviewer-name">王**</div>
+                            <div class="review-date">2024-01-08</div>
+                        </div>
+                        <div class="review-rating">★★★★★</div>
+                    </div>
+                    <div class="review-text">物流很快，包装也很好，鞋子很漂亮，满意！</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 推荐内容 -->
+        <div class="tab-content" id="recommend-content">
+            <div class="recommend-content">
+                <div class="recommend-grid">
+                    <div class="recommend-item">
+                        <img src="product.jpg" alt="推荐商品1">
+                        <div class="recommend-info">
+                            <div class="recommend-name">同款运动鞋 黑色版本</div>
+                            <div class="recommend-price">¥89.00</div>
+                        </div>
+                    </div>
+                    <div class="recommend-item">
+                        <img src="product2.jpg" alt="推荐商品2">
+                        <div class="recommend-info">
+                            <div class="recommend-name">休闲运动鞋 白色款</div>
+                            <div class="recommend-price">¥79.00</div>
+                        </div>
+                    </div>
+                    <div class="recommend-item">
+                        <img src="product3.jpg" alt="推荐商品3">
+                        <div class="recommend-info">
+                            <div class="recommend-name">轻便跑鞋 蓝色款</div>
+                            <div class="recommend-price">¥99.00</div>
+                        </div>
+                    </div>
+                    <div class="recommend-item">
+                        <img src="product.jpg" alt="推荐商品4">
+                        <div class="recommend-info">
+                            <div class="recommend-name">时尚板鞋 灰色款</div>
+                            <div class="recommend-price">¥69.00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部操作按钮 -->
+    <div class="bottom-actions">
+        <button class="add-to-cart">加入购物车</button>
+        <button class="buy-now">立即购买</button>
+    </div>
+    <script>
+        // 模拟获取购物车商品数量
+        function updateCartItemCount() {
+            // 这里可以替换为从后端获取真实数据的逻辑
+            const cartCount = 5; // 模拟购物车商品数量
+            const cartItemCountElement = document.getElementById('cartItemCount');
+            cartItemCountElement.textContent = cartCount;
+        }
+
+        // 页面加载时更新购物车数量
+        window.addEventListener('load', updateCartItemCount);
+
+        // 图片轮播逻辑
+        const slides = document.querySelectorAll('.carousel-slides img');
+        const dotsContainer = document.querySelector('.carousel-dots');
+        let currentSlide = 0;
+        let slideInterval;
+
+        // 创建导航点
+        slides.forEach((_, index) => {
+            const dot = document.createElement('div');
+            dot.classList.add('carousel-dot');
+            if (index === 0) {
+                dot.classList.add('active');
+            }
+            dot.addEventListener('click', () => {
+                goToSlide(index);
+            });
+            dotsContainer.appendChild(dot);
+        });
+
+        const dots = document.querySelectorAll('.carousel-dot');
+
+        // 切换到指定幻灯片
+        function goToSlide(slideIndex) {
+            slides[currentSlide].style.display = 'none';
+            dots[currentSlide].classList.remove('active');
+            currentSlide = slideIndex;
+            slides[currentSlide].style.display = 'block';
+            dots[currentSlide].classList.add('active');
+        }
+
+        // 切换到下一张幻灯片
+        function nextSlide() {
+            const nextIndex = (currentSlide + 1) % slides.length;
+            goToSlide(nextIndex);
+        }
+
+        // 切换到上一张幻灯片
+        function prevSlide() {
+            const prevIndex = (currentSlide - 1 + slides.length) % slides.length;
+            goToSlide(prevIndex);
+        }
+
+        // 自动轮播
+        function startSlideShow() {
+            slideInterval = setInterval(nextSlide, 5000);
+        }
+
+        // 停止自动轮播
+        function stopSlideShow() {
+            clearInterval(slideInterval);
+        }
+
+        // 初始化幻灯片显示
+        slides.forEach((slide, index) => {
+            slide.style.display = index === 0 ? 'block' : 'none';
+        });
+
+        // 鼠标悬停时停止自动轮播
+        const carouselContainer = document.querySelector('.carousel-container');
+        carouselContainer.addEventListener('mouseenter', stopSlideShow);
+        carouselContainer.addEventListener('mouseleave', startSlideShow);
+
+        // 启动自动轮播
+        startSlideShow();
+
+        // Tab切换逻辑
+        const tabItems = document.querySelectorAll('.tab-item');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabItems.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // 移除所有active类
+                tabItems.forEach(item => item.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+
+                // 添加active类到当前tab
+                tab.classList.add('active');
+                
+                // 显示对应的内容
+                const targetTab = tab.getAttribute('data-tab');
+                const targetContent = document.getElementById(targetTab + '-content');
+                if (targetContent) {
+                    targetContent.classList.add('active');
+                }
+            });
+        });
+
+        // 收藏功能逻辑
+        let isFavorited = false;
+
+        function toggleFavorite() {
+            const favoriteBtn = document.getElementById('favoriteBtn');
+            const favoriteIcon = document.getElementById('favoriteIcon');
+            
+            isFavorited = !isFavorited;
+            
+            if (isFavorited) {
+                // 添加到收藏
+                favoriteBtn.classList.add('active');
+                favoriteIcon.classList.remove('fa-regular');
+                favoriteIcon.classList.add('fa-solid');
+                showToast('已添加到收藏');
+            } else {
+                // 取消收藏
+                favoriteBtn.classList.remove('active');
+                favoriteIcon.classList.remove('fa-solid');
+                favoriteIcon.classList.add('fa-regular');
+                showToast('已取消收藏');
+            }
+            
+            // 这里可以添加与后端交互的逻辑
+            console.log('收藏状态:', isFavorited ? '已收藏' : '未收藏');
+        }
+
+        // 显示提示信息
+        function showToast(message) {
+            // 创建提示元素
+            const toast = document.createElement('div');
+            toast.textContent = message;
+            toast.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: rgba(0, 0, 0, 0.8);
+                color: white;
+                padding: 12px 20px;
+                border-radius: 6px;
+                font-size: 14px;
+                z-index: 10000;
+                animation: fadeInOut 2s ease-in-out;
+            `;
+            
+            // 添加动画样式
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes fadeInOut {
+                    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+                    20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+                    80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+                    100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            document.body.appendChild(toast);
+            
+            // 2秒后移除提示
+            setTimeout(() => {
+                document.body.removeChild(toast);
+            }, 2000);
+        }
+    </script>
+</body>
+
+</html>

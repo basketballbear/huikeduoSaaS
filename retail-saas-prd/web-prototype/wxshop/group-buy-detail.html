@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品详情</title>
+    <!-- 引入 Font Awesome 6 免费版 CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- 引入合并后的 CSS 文件 -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- 顶部导航 -->
+    <div class="group-buy-header">
+        <button class="back-button-whitebg" onclick="history.back()">
+            <i class="fa-solid fa-arrow-left"></i>
+        </button>
+        <h2 class="page-title">商品详情</h2>
+        <div class="header-actions">
+            <button class="favorite-button" id="favoriteBtn" onclick="toggleFavorite()">
+                <i class="fa-regular fa-star" id="favoriteIcon"></i>
+            </button>
+            <button class="share-button">
+                <i class="fa-solid fa-share-nodes"></i>
+            </button>
+            <button class="cart-button" onclick="window.location.href='cart.html'">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span class="cart-badge" id="cartItemCount">0</span>
+            </button>
+        </div>
+    </div>
+    <div class="product-detail-container">
+        <!-- 商品图片轮播区域 -->
+        <div class="carousel-container">
+            <div class="carousel-slides">
+                <img src="product.jpg" alt="团购商品图片" class="product-image">
+                <img src="product2.jpg" alt="团购商品图片" class="product-image">
+                <img src="product3.jpg" alt="团购商品图片" class="product-image">
+            </div>
+            <div class="carousel-dots"></div>
+        </div>
+
+        <!-- 价格区域 -->
+        <div class="price-section">
+            <span class="group-price">¥89.00</span>
+            <div class="price-desc">
+                <span>=</span>
+                <div class="price-item">
+                    <span>零售价</span>
+                    <span>¥129.00</span>
+                </div>
+                <span>
+                    -
+                </span>
+                <div class="price-item">
+                    <span>团购优惠</span>
+                    <span>¥40.00</span>
+                </div>
+            </div>
+            <div class="sold-count">
+                <span class="sold-text">已售</span>
+                <span class="sold-number">1000</span>
+            </div>
+        </div>
+
+        <!-- 商品名称 -->
+        <h1 class="product-name-detail">示例团购商品名称</h1>
+
+        <!-- 商品标签 -->
+        <div class="product-tags">
+            <span class="tag">超值优惠</span>
+            <span class="tag">热门推荐</span>
+        </div>
+
+        <!-- 须知 -->
+        <div class="notice">
+            <span class="notice-text">
+                <span style="font-weight: bolder; margin-right: 5px;">须知</span>
+                周一至周日可用
+            </span>
+        </div>
+
+        <!-- 保障 -->
+        <div class="guarantee">
+            <span style="font-weight: bolder; margin-right: 5px;">保障</span>
+            <span class="guarantee-text">正品 · 随时退 ·过期自动退</span>
+        </div>
+
+        <!-- 团购详情 -->
+        <div class="group-detail">
+            <h3 class="detail-title">团购详情</h3>
+            <div class="item-list">
+                <div class="item">
+                    <span class="item-name">商品 A</span>
+                    <span class="item-quantity">x1</span>
+                    <span class="item-price">¥50.00</span>
+                </div>
+                <div class="item">
+                    <span class="item-name">商品 B</span>
+                    <span class="item-quantity">x2</span>
+                    <span class="item-price">¥39.00</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 购买须知 -->
+        <div class="purchase-notice">
+            <h3 class="notice-title">购买须知</h3>
+            <p class="notice-content">有效期：2025 年 12 月 31 日<br>使用时间：09:00 - 21:00<br>使用规则：请提前一天预约</p>
+        </div>
+    </div>
+    <!-- 底部操作按钮 -->
+    <div class="bottom-actions">
+        <button class="add-to-cart">加入购物车</button>
+        <button class="buy-now">立即团购</button>
+    </div>
+
+    <script>
+        // 收藏功能
+        let isFavorited = false;
+
+        function toggleFavorite() {
+            const favoriteBtn = document.getElementById('favoriteBtn');
+            const favoriteIcon = document.getElementById('favoriteIcon');
+            
+            isFavorited = !isFavorited;
+            
+            if (isFavorited) {
+                // 添加到收藏
+                favoriteBtn.classList.add('active');
+                favoriteIcon.classList.remove('fa-regular');
+                favoriteIcon.classList.add('fa-solid');
+                showToast('已添加到收藏');
+            } else {
+                // 取消收藏
+                favoriteBtn.classList.remove('active');
+                favoriteIcon.classList.remove('fa-solid');
+                favoriteIcon.classList.add('fa-regular');
+                showToast('已取消收藏');
+            }
+            
+            // 这里可以添加与后端交互的逻辑
+            console.log('收藏状态:', isFavorited ? '已收藏' : '未收藏');
+        }
+
+        // 显示提示信息
+        function showToast(message) {
+            // 创建提示元素
+            const toast = document.createElement('div');
+            toast.textContent = message;
+            toast.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: rgba(0, 0, 0, 0.8);
+                color: white;
+                padding: 12px 20px;
+                border-radius: 6px;
+                font-size: 14px;
+                z-index: 10000;
+                animation: fadeInOut 2s ease-in-out;
+            `;
+            
+            // 添加动画样式
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes fadeInOut {
+                    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+                    20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+                    80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+                    100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            document.body.appendChild(toast);
+            
+            // 2秒后移除提示
+            setTimeout(() => {
+                document.body.removeChild(toast);
+            }, 2000);
+        }
+
+        // 模拟获取购物车商品数量
+        function updateCartItemCount() {
+            // 这里可以替换为从后端获取真实数据的逻辑
+            const cartCount = 5; // 模拟购物车商品数量
+            const cartItemCountElement = document.getElementById('cartItemCount');
+            cartItemCountElement.textContent = cartCount;
+        }
+
+        // 页面加载时更新购物车数量
+        window.addEventListener('load', updateCartItemCount);
+
+        // 图片轮播逻辑
+        const slides = document.querySelectorAll('.carousel-slides img');
+        const dotsContainer = document.querySelector('.carousel-dots');
+        let currentSlide = 0;
+        let slideInterval;
+
+        // 创建导航点
+        slides.forEach((_, index) => {
+            const dot = document.createElement('div');
+            dot.classList.add('carousel-dot');
+            if (index === 0) {
+                dot.classList.add('active');
+            }
+            dot.addEventListener('click', () => {
+                goToSlide(index);
+            });
+            dotsContainer.appendChild(dot);
+        });
+
+        const dots = document.querySelectorAll('.carousel-dot');
+
+        // 切换到指定幻灯片
+        function goToSlide(slideIndex) {
+            slides[currentSlide].style.display = 'none';
+            dots[currentSlide].classList.remove('active');
+            currentSlide = slideIndex;
+            slides[currentSlide].style.display = 'block';
+            dots[currentSlide].classList.add('active');
+        }
+
+        // 切换到下一张幻灯片
+        function nextSlide() {
+            const nextIndex = (currentSlide + 1) % slides.length;
+            goToSlide(nextIndex);
+        }
+
+        // 切换到上一张幻灯片
+        function prevSlide() {
+            const prevIndex = (currentSlide - 1 + slides.length) % slides.length;
+            goToSlide(prevIndex);
+        }
+
+        // 自动轮播
+        function startSlideShow() {
+            slideInterval = setInterval(nextSlide, 5000);
+        }
+
+        // 停止自动轮播
+        function stopSlideShow() {
+            clearInterval(slideInterval);
+        }
+
+        // 初始化幻灯片显示
+        slides.forEach((slide, index) => {
+            slide.style.display = index === 0 ? 'block' : 'none';
+        });
+
+        // 鼠标悬停时停止自动轮播
+        const carouselContainer = document.querySelector('.carousel-container');
+        carouselContainer.addEventListener('mouseenter', stopSlideShow);
+        carouselContainer.addEventListener('mouseleave', startSlideShow);
+
+        // 启动自动轮播
+        startSlideShow();
+    </script>
+</body>
+
+</html>

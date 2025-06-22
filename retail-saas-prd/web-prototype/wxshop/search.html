@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>搜索二级页</title>
+    <!-- 引入 Font Awesome 6 免费版 CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- 引入合并后的 CSS 文件 -->
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* 新增购物车按钮样式 */
+        .cart-button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            margin-left: 8px;
+            position: relative;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 顶部返回和搜索栏 -->
+    <div class="top-bar">
+        <button class="back-button" onclick="history.back()"><i class="fa-solid fa-arrow-left"></i></button>
+        <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="搜索商品或商家">
+            <button class="search-button">搜索</button>
+        </div>
+        <!-- 新增购物车按钮 -->
+        <button class="cart-button" onclick="window.location.href='cart.html'">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span class="cart-badge" id="cartItemCount">0</span>
+        </button>
+    </div>
+
+    <!-- 标签栏 -->
+    <div class="tabs" style="margin-top: 60px;">
+        <div class="tab-item active" onclick="switchTab(this, 'products')">商品</div>
+        <div class="tab-item" onclick="switchTab(this, 'sellers')">商家</div>
+    </div>
+
+    <!-- 搜索结果列表 -->
+    <div class="search-results" id="searchResults">
+        <!-- 商品搜索结果示例 -->
+        <div class="result-item product-result" style="display: flex;" onclick="goToGroupBuyDetail()">
+            <img src="product.jpg" alt="商品图片">
+            <div class="result-info">
+                <div class="result-name">示例商品名称，这是一个较长的商品名称</div>
+                <div class="result-tags">
+                    <span class="result-tag">标签1</span>
+                    <span class="result-tag">标签2</span>
+                    <span class="result-tag">标签3</span>
+                    <span class="result-tag group-buy-tag">团购</span>
+                </div>
+                <div class="result-price">¥99.00</div>
+                <div class="result-line-group">
+                    <div class="result-sold">已售 100 件</div>
+                    <div class="result-seller">示例商家名称</div>
+                </div>
+            </div>
+        </div>
+        <div class="result-item product-result" style="display: flex;">
+            <img src="product.jpg" alt="商品图片">
+            <div class="result-info">
+                <div class="result-name">示例商品名称，这是一个较长的商品名称</div>
+                <div class="result-tags">
+                    <span class="result-tag">标签1</span>
+                    <span class="result-tag">标签2</span>
+                    <span class="result-tag">标签3</span>
+                    <span class="result-tag takeout-tag">点餐</span>
+                </div>
+                <div class="result-price">¥99.00</div>
+                <div class="result-line-group">
+                    <div class="result-sold">已售 100 件</div>
+                    <div class="result-seller">示例商家名称</div>
+                </div>
+            </div>
+        </div>
+        <div class="result-item product-result" style="display: flex;">
+            <img src="product.jpg" alt="商品图片">
+            <div class="result-info">
+                <div class="result-name">示例商品名称，这是一个较长的商品名称</div>
+                <div class="result-tags">
+                    <span class="result-tag">标签1</span>
+                    <span class="result-tag">标签2</span>
+                    <span class="result-tag">标签3</span>
+                    <span class="result-tag takeout-tag">点餐</span>
+                </div>
+                <div class="result-price">¥99.00</div>
+                <div class="result-line-group">
+                    <div class="result-sold">已售 100 件</div>
+                    <div class="result-seller">示例商家名称</div>
+                </div>
+            </div>
+        </div>
+        <div class="result-item product-result" style="display: flex;" onclick="goToGroupBuyDetail()">
+            <img src="product.jpg" alt="商品图片">
+            <div class="result-info">
+                <div class="result-name">示例商品名称，这是一个较长的商品名称</div>
+                <div class="result-tags">
+                    <span class="result-tag">标签1</span>
+                    <span class="result-tag">标签2</span>
+                    <span class="result-tag">标签3</span>
+                    <span class="result-tag group-buy-tag">团购</span>
+                </div>
+                <div class="result-price">¥99.00</div>
+                <div class="result-line-group">
+                    <div class="result-sold">已售 100 件</div>
+                    <div class="result-seller">示例商家名称</div>
+                </div>
+            </div>
+        </div>
+        <div class="result-item product-result" style="display: flex;">
+            <img src="product.jpg" alt="商品图片">
+            <div class="result-info">
+                <div class="result-name">示例商品名称，这是一个较长的商品名称</div>
+                <div class="result-tags">
+                    <span class="result-tag">标签1</span>
+                    <span class="result-tag">标签2</span>
+                    <span class="result-tag">标签3</span>
+                </div>
+                <div class="result-price">¥99.00</div>
+                <div class="result-line-group">
+                    <div class="result-sold">已售 100 件</div>
+                    <div class="result-seller">示例商家名称</div>
+                </div>
+            </div>
+        </div>
+        <div class="result-item product-result" style="display: flex;">
+            <img src="product.jpg" alt="商品图片">
+            <div class="result-info">
+                <div class="result-name">示例商品名称，这是一个较长的商品名称</div>
+                <div class="result-tags">
+                    <span class="result-tag">标签1</span>
+                    <span class="result-tag">标签2</span>
+                    <span class="result-tag">标签3</span>
+                </div>
+                <div class="result-price">¥99.00</div>
+                <div class="result-line-group">
+                    <div class="result-sold">已售 100 件</div>
+                    <div class="result-seller">示例商家名称</div>
+                </div>
+            </div>
+        </div>
+        <!-- 商家搜索结果示例 -->
+        <div class="result-item seller-result" style="display: none;">
+            <img src="shop.jpg" alt="商家图片">
+            <div class="result-info">
+                <div class="result-name">示例商家名称</div>
+                <div class="result-tags">
+                    <span class="result-tag">商家标签1</span>
+                </div>
+                <div class="shop-distance">距离 1.5 km</div>
+            </div>
+            <a href="#" class="shop-link">进店</a>
+        </div>
+        <div class="result-item seller-result" style="display: none;">
+            <img src="shop.jpg" alt="商家图片">
+            <div class="result-info">
+                <div class="result-name">示例商家名称</div>
+                <div class="result-tags">
+                    <span class="result-tag">商家标签1</span>
+                </div>
+                <div class="shop-distance">距离 2.5 km</div>
+            </div>
+            <a href="#" class="shop-link">进店</a>
+        </div>
+        <div class="result-item seller-result" style="display: none;">
+            <img src="shop.jpg" alt="商家图片">
+            <div class="result-info">
+                <div class="result-name">示例商家名称</div>
+                <div class="result-tags">
+                    <span class="result-tag">商家标签1</span>
+                </div>
+                <div class="shop-distance">距离 10 km</div>
+            </div>
+            <a href="#" class="shop-link">进店</a>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tabElement, tabType) {
+            const tabs = document.querySelectorAll('.tab-item');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+            tabElement.classList.add('active');
+
+            const productResults = document.querySelectorAll('.product-result');
+            const sellerResults = document.querySelectorAll('.seller-result');
+
+            if (tabType === 'products') {
+                productResults.forEach(result => {
+                    result.style.display = 'flex';
+                });
+                sellerResults.forEach(result => {
+                    result.style.display = 'none';
+                });
+            } else if (tabType === 'sellers') {
+                productResults.forEach(result => {
+                    result.style.display = 'none';
+                });
+                sellerResults.forEach(result => {
+                    result.style.display = 'flex';
+                });
+            }
+        }
+
+        // 模拟获取购物车商品数量
+        function updateCartItemCount() {
+            // 这里可以替换为从后端获取真实数据的逻辑
+            const cartCount = 5; // 模拟购物车商品数量
+            const cartItemCountElement = document.getElementById('cartItemCount');
+            cartItemCountElement.textContent = cartCount;
+        }
+
+        // 页面加载时更新购物车数量
+        window.addEventListener('load', updateCartItemCount);
+
+        function goToGroupBuyDetail() {
+            window.location.href = 'group-buy-detail.html';
+        }
+    </script>
+</body>
+
+</html>

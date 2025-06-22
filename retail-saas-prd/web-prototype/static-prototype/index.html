@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>运营平台</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            background-color: #f0f2f5;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .layout {
+            display: flex;
+            width: 100%;
+        }
+
+        .sidebar {
+            width: 220px;
+            background-color: #001529;
+            color: #fff;
+            padding: 20px 0;
+            box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
+            flex-shrink: 0;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 30px;
+            color: #fff;
+        }
+
+        .main-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .main-nav .menu-item {
+            display: block;
+            padding: 12px 20px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background-color 0.3s, color 0.3s;
+            position: relative;
+        }
+
+        .main-nav .menu-item:hover,
+        .main-nav .menu-item.active {
+            background-color: #1890ff;
+            color: #fff;
+        }
+
+        .main-nav .menu-has-submenu>.menu-item .arrow {
+            float: right;
+            transition: transform 0.3s;
+        }
+
+        .main-nav .menu-has-submenu>.menu-item.expanded .arrow {
+            transform: rotate(90deg);
+        }
+
+        .main-nav .submenu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            background-color: #000c17;
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .main-nav .submenu.open {
+            max-height: 500px;
+            /* Sufficiently large value to show all submenu items */
+            transition: max-height 0.5s ease-in;
+        }
+
+        .main-nav .submenu li a {
+            display: block;
+            padding: 10px 20px 10px 40px;
+            /* Indent submenu items */
+            color: #ccc;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .main-nav .submenu li a:hover,
+        .main-nav .submenu li a.active {
+            background-color: #001529;
+            color: #1890ff;
+        }
+
+        .top-header {
+            background-color: #fff;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e8e8e8;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .breadcrumb-nav {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .user-info {
+            position: relative;
+            cursor: pointer;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .user-dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            border-radius: 4px;
+            min-width: 120px;
+            z-index: 100;
+            padding: 5px 0;
+        }
+
+        .user-info:hover .user-dropdown {
+            display: block;
+        }
+
+        .user-dropdown a {
+            display: block;
+            padding: 8px 15px;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .user-dropdown a:hover {
+            background-color: #f0f2f5;
+        }
+
+        .tab-bar {
+            background-color: #fff;
+            padding: 8px 20px;
+            border-bottom: 1px solid #e8e8e8;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tab {
+            background-color: #e6f7ff;
+            border: 1px solid #91d5ff;
+            color: #1890ff;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .tab.active {
+            background-color: #1890ff;
+            color: #fff;
+        }
+
+        .tab .close-tab {
+            margin-left: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .iframe-container {
+            flex-grow: 1;
+            /* padding: 20px;
+            background-color: #fff;
+            margin: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); */
+            overflow: hidden;
+            /* Ensure iframe fits */
+        }
+
+        .iframe-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: #f0f2f5;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .dashboard-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .dashboard-section h2 {
+            margin-top: 0;
+            margin-bottom: 16px;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .data-card {
+            background-color: #e6f7ff;
+            border: 1px solid #91d5ff;
+            border-radius: 4px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .data-card .value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1890ff;
+            margin-bottom: 8px;
+        }
+
+        .data-card .label {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .chart-placeholder {
+            background-color: #f0f2f5;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #999;
+            border-radius: 4px;
+            margin-top: 16px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 24px;
+            color: #999;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+
+        </aside>
+        <main class="main-content">
+            <header class="top-header">
+                <div class="breadcrumb-nav">首页</div>
+                <div class="user-info">
+                    <span id="loggedInUser">Admin</span>
+                    <div class="user-dropdown">
+                        <a href="#" id="changePassword">修改密码</a>
+                        <a href="#" id="logout">退出登录</a>
+                    </div>
+                </div>
+            </header>
+            <div class="tab-bar">
+                <div class="tab active" data-src="dashboard.html"><span>首页</span><span class="close-tab">&times;</span>
+                </div>
+            </div>
+            <div class="iframe-container">
+                <iframe id="contentFrame" src="dashboard.html" frameborder="0"></iframe>
+            </div>
+            <script src="./js/menu.js"></script>
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    renderMenu();
+                    const loggedInUser = document.getElementById('loggedInUser');
+                    const userDropdown = document.querySelector('.user-dropdown');
+                    const contentFrame = document.getElementById('contentFrame');
+                    const tabBar = document.querySelector('.tab-bar');
+                    const breadcrumbNav = document.querySelector('.breadcrumb-nav');
+
+                    // User dropdown toggle
+                    loggedInUser.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        userDropdown.style.display = userDropdown.style.display === 'block' ? 'none' : 'block';
+                    });
+
+                    document.addEventListener('click', function (e) {
+                        if (!loggedInUser.contains(e.target) && !userDropdown.contains(e.target)) {
+                            userDropdown.style.display = 'none';
+                        }
+                    });
+
+                    // Handle navigation from menu.js
+                    window.addEventListener('message', function (event) {
+                        if (event.data.type === 'navigate') {
+                            const { href, title } = event.data;
+                            addOrActivateTab(href, title);
+                        }
+                    });
+
+                    function addOrActivateTab(href, title) {
+                        let existingTab = tabBar.querySelector(`.tab[data-src="${href}"]`);
+                        if (existingTab) {
+                            activateTab(existingTab);
+                        } else {
+                            const newTab = document.createElement('div');
+                            newTab.classList.add('tab');
+                            newTab.setAttribute('data-src', href);
+                            newTab.innerHTML = `<span>${title}</span><span class="close-tab">&times;</span>`;
+                            tabBar.appendChild(newTab);
+                            activateTab(newTab);
+
+                            newTab.querySelector('.close-tab').addEventListener('click', function (e) {
+                                e.stopPropagation();
+                                closeTab(newTab);
+                            });
+
+                            newTab.addEventListener('click', function () {
+                                activateTab(newTab);
+                            });
+                        }
+                    }
+
+                    function activateTab(tab) {
+                        tabBar.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                        tab.classList.add('active');
+                        contentFrame.src = tab.getAttribute('data-src');
+                        updateBreadcrumb(tab.querySelector('span').textContent);
+                        // Notify menu.js to highlight the active menu item
+                        contentFrame.onload = function () {
+                            contentFrame.contentWindow.postMessage({ type: 'highlightMenu', path: tab.getAttribute('data-src') }, '*');
+                        };
+                    }
+
+                    function closeTab(tabToClose) {
+                        const isActive = tabToClose.classList.contains('active');
+                        tabToClose.remove();
+
+                        if (isActive) {
+                            const remainingTabs = tabBar.querySelectorAll('.tab');
+                            if (remainingTabs.length > 0) {
+                                activateTab(remainingTabs[remainingTabs.length - 1]);
+                            } else {
+                                // No tabs left, load a default page or show empty state
+                                contentFrame.src = 'about:blank';
+                                updateBreadcrumb('首页');
+                            }
+                        }
+                    }
+
+                    function updateBreadcrumb(pageTitle) {
+                        breadcrumbNav.textContent = `首页 / ${pageTitle}`;
+                    }
+
+                    // Initial load
+                    const initialTab = tabBar.querySelector('.tab.active');
+                    if (initialTab) {
+                        activateTab(initialTab);
+                    }
+                });
+            </script>
+</body>
+
+</html>

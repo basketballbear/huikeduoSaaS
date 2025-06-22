@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>运营平台</title>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            background-color: #f0f2f5;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .layout {
+            display: flex;
+            width: 100%;
+        }
+
+        .sidebar {
+            width: 220px;
+            background-color: #001529;
+            color: #fff;
+            padding: 20px 0;
+            box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
+            flex-shrink: 0;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 30px;
+            color: #fff;
+        }
+
+        .main-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .main-nav .menu-item {
+            display: block;
+            padding: 12px 20px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background-color 0.3s, color 0.3s;
+            position: relative;
+        }
+
+        .main-nav .menu-item:hover,
+        .main-nav .menu-item.active {
+            background-color: #1890ff;
+            color: #fff;
+        }
+
+        .main-nav .menu-has-submenu > .menu-item .arrow {
+            float: right;
+            transition: transform 0.3s;
+        }
+
+        .main-nav .menu-has-submenu > .menu-item.expanded .arrow {
+            transform: rotate(90deg);
+        }
+
+        .main-nav .submenu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            background-color: #000c17;
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .main-nav .submenu.open {
+            max-height: 500px; /* Sufficiently large value to show all submenu items */
+            transition: max-height 0.5s ease-in;
+        }
+
+        .main-nav .submenu li a {
+            display: block;
+            padding: 10px 20px 10px 40px; /* Indent submenu items */
+            color: #ccc;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .main-nav .submenu li a:hover,
+        .main-nav .submenu li a.active {
+            background-color: #001529;
+            color: #1890ff;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+            background-color: #fff;
+            margin: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="logo">运营平台</div>
+            <nav class="main-nav">
+                <ul>
+                    <!-- Menu will be rendered here by menu.js -->
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="container">
+                <h1>商家管理 - 商家基本信息</h1>
+
+    <div class="content-section">
+        <h2>商家列表</h2>
+        <p>展示所有商家的基本信息，包括商家名称、联系方式、注册时间、状态等。</p>
+        <p><strong>演示数据：</strong></p>
+        <table border="1" style="width:100%; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th>商家名称</th>
+                    <th>联系人</th>
+                    <th>联系电话</th>
+                    <th>注册时间</th>
+                    <th>状态</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>演示商家A</td>
+                    <td>张三</td>
+                    <td>13812345678</td>
+                    <td>2023-01-01</td>
+                    <td>正常</td>
+                </tr>
+                <tr>
+                    <td>演示商家B</td>
+                    <td>李四</td>
+                    <td>13987654321</td>
+                    <td>2023-02-15</td>
+                    <td>正常</td>
+                </tr>
+                <tr>
+                    <td>演示商家C</td>
+                    <td>王五</td>
+                    <td>13700001111</td>
+                    <td>2023-03-20</td>
+                    <td>禁用</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="content-section">
+        <h2>商家详情</h2>
+        <p>点击商家列表中的商家，可查看详细信息，并进行编辑操作。</p>
+        <p><strong>演示数据：</strong></p>
+        <ul>
+            <li><strong>商家名称：</strong> 演示商家A</li>
+            <li><strong>统一社会信用代码：</strong> 91310000XXXXXXXXXX</li>
+            <li><strong>法人代表：</strong> 张三</li>
+            <li><strong>注册地址：</strong> 上海市浦东新区XX路XX号</li>
+            <li><strong>经营范围：</strong> 餐饮服务</li>
+            <li><strong>联系电话：</strong> 13812345678</li>
+            <li><strong>邮箱：</strong> demoA@example.com</li>
+            <li><strong>状态：</strong> 正常</li>
+        </ul>
+    </div>
+</div>
+        </main>
+    </div>
+
+    <script src="./js/menu.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            renderMenu();
+        });
+    </script>
+</body>
+</html>

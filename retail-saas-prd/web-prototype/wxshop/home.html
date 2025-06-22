@@ -1,0 +1,1466 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微商城</title>
+    <!-- 引入 Font Awesome 6 免费版 CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- 引入外部 CSS 文件 -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- 首页 -->
+    <div class="home-page" id="home">
+        <div class="top-search">
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input id="homeSearchInput" type="text" placeholder="搜索商品或商家">
+                <!-- 新增搜索按钮 -->
+                <button class="search-button" onclick="goToSearchPage('homeSearchInput')">搜索</button>
+            </div>
+        </div>
+        <div class="home-content">
+            <div class="carousel-container">
+                <div class="carousel-slides">
+                    <img src="product.jpg" alt="团购商品图片" class="product-image">
+                    <img src="product2.jpg" alt="团购商品图片" class="product-image">
+                    <img src="product3.jpg" alt="团购商品图片" class="product-image">
+                </div>
+                <div class="carousel-dots"></div>
+            </div>
+            <div class="function-nav">
+                <div class="nav-item">
+                    <i class="fa-solid fa-store"></i>
+                    <span>电商</span>
+                </div>
+                <div class="nav-item">
+                    <i class="fa-solid fa-utensils"></i>
+                    <span>点餐</span>
+                </div>
+                <div class="nav-item">
+                    <i class="fa-solid fa-tag"></i>
+                    <span>团购</span>
+                </div>
+                <div class="nav-item">
+                    <i class="fa-solid fa-gift"></i>
+                    <span>优惠</span>
+                </div>
+                <div class="nav-item">
+                    <i class="fa-solid fa-map-marker-alt"></i>
+                    <span>附近</span>
+                </div>
+            </div>
+            <div class="product-recommend">
+                <h3>商品推荐</h3>
+                <div class="product-list">
+                    <div class="product-item" onclick="goToProductDetail()">
+                        <img src="product.jpg" alt="商品图片">
+                        <div class="product-info">
+                            <div class="product-name">示例电商商品名称，这是一个较长的商品名称</div>
+                            <div class="product-price">¥99.00</div>
+                        </div>
+                    </div>
+                    <div class="product-item" onclick="goToGroupBuyDetail()">
+                        <img src="product.jpg" alt="商品图片">
+                        <!-- 团购商品添加角标 -->
+                        <div class="group-buy-badge">团购</div>
+                        <div class="product-info">
+                            <div class="product-name">示例团购商品名称，这是一个较长的商品名称</div>
+                            <div class="product-price">¥89.00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 分类页 -->
+    <div class="category-page" id="category" style="display: none;">
+        <div class="category-top-search">
+            <div class="category-search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input id="categorySearchInput" type="text" placeholder="搜索商品或商家">
+                <!-- 新增搜索按钮 -->
+                <button class="search-button" onclick="goToSearchPage('categorySearchInput')">搜索</button>
+            </div>
+        </div>
+        <div class="category-content">
+            <div class="left-category">
+                <ul>
+                    <li class="active" onclick="showCategory('ecommerce')">电商包邮</li>
+                    <li onclick="showCategory('takeout')">点餐自提</li>
+                    <li onclick="showCategory('groupBuy')">团购优选</li>
+                </ul>
+            </div>
+            <div class="right-content" id="categoryRightContent">
+                <!-- 电商包邮分类 -->
+                <div class="category-item" onclick="goToSubCategory('ecommerce', 'all')">
+                    <i class="fa-solid fa-box"></i>
+                    <span>全部</span>
+                </div>
+                <div class="category-item" onclick="goToSubCategory('ecommerce', 'clothes')">
+                    <i class="fa-solid fa-tshirt"></i>
+                    <span>服装</span>
+                </div>
+                <div class="category-item" onclick="goToSubCategory('ecommerce', 'electronics')">
+                    <i class="fa-solid fa-laptop"></i>
+                    <span>电子设备</span>
+                </div>
+                <div class="category-item" onclick="goToSubCategory('ecommerce', 'homeGoods')">
+                    <i class="fa-solid fa-couch"></i>
+                    <span>家居用品</span>
+                </div>
+                <div class="category-item" onclick="goToSubCategory('ecommerce', 'game')">
+                    <i class="fa-solid fa-gamepad"></i>
+                    <span>游戏周边</span>
+                </div>
+                <!-- 更多电商分类可继续添加 -->
+
+                <!-- 外卖外送分类 -->
+                <div class="category-item" style="display: none;" onclick="goToSubCategory('takeout', 'all')">
+                    <i class="fa-solid fa-box"></i>
+                    <span>全部</span>
+                </div>
+                <div class="category-item" style="display: none;" onclick="goToSubCategory('takeout', 'restaurants')">
+                    <i class="fa-solid fa-bowl-food"></i>
+                    <span>家常菜</span>
+                </div>
+                <div class="category-item" style="display: none;" onclick="goToSubCategory('takeout', 'fastFood')">
+                    <i class="fa-solid fa-hamburger"></i>
+                    <span>快餐</span>
+                </div>
+                <div class="category-item" style="display: none;" onclick="goToSubCategory('takeout', 'dessert')">
+                    <i class="fa-solid fa-ice-cream"></i>
+                    <span>甜品</span>
+                </div>
+                <div class="category-item" style="display: none;" onclick="goToSubCategory('takeout', 'snacks')">
+                    <i class="fa-solid fa-bread-slice"></i>
+                    <span>烘焙</span>
+                </div>
+                <div class="category-item" style="display: none;" onclick="goToSubCategory('takeout', 'drinks')">
+                    <i class="fa-solid fa-coffee"></i>
+                    <span>饮品</span>
+                </div>
+                <div class="category-item" style="display: none;" onclick="goToSubCategory('takeout', 'others')">
+                    <i class="fa-solid fa-utensils"></i>
+                    <span>西餐</span>
+                </div>
+                <!-- 更多外卖分类可继续添加 -->
+
+                <!-- 团购优选分类 -->
+                <div class="category-item" style="display: none;" onclick="goToSubCategory('groupBuy', 'all')">
+                    <i class="fa-solid fa-box"></i>
+                    <span>全部</span>
+                </div>
+                <div class="category-item" style="display: none;" onclick="goToSubCategory('groupBuy', 'food')">
+                    <i class="fa-solid fa-utensils"></i>
+                    <span>美食</span>
+                </div>
+                <div class="category-item" style="display: none;" onclick="goToSubCategory('groupBuy', 'vegetable')">
+                    <i class="fa-solid fa-carrot"></i>
+                    <span>果蔬生鲜</span>
+                </div>
+                <div class="category-item" style="display: none;" onclick="goToSubCategory('groupBuy', 'travel')">
+                    <i class="fa-solid fa-plane"></i>
+                    <span>旅游</span>
+                </div>
+                <div class="category-item" style="display: none;" onclick="goToSubCategory('groupBuy', 'beauty')">
+                    <i class="fa-solid fa-spa"></i>
+                    <span>美容</span>
+                </div>
+                <!-- 更多团购分类可继续添加 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 购物车页 -->
+    <div class="cart-page" id="cart" style="display: none;">
+        <!-- 购物车头部 -->
+        <div class="cart-header">
+            <h2>购物车</h2>
+            <div class="cart-header-actions">
+                <span class="edit-btn" onclick="toggleEditMode()">编辑</span>
+            </div>
+        </div>
+
+        <!-- 购物车内容 -->
+        <div class="cart-content">
+            <!-- 电商类商品 -->
+            <div class="cart-section">
+                <div class="section-header">
+                    <div class="section-title">
+                        <i class="fa-solid fa-shopping-bag"></i>
+                        <span>电商商品</span>
+                    </div>
+                    <div class="section-total">
+                        <span>共2件商品</span>
+                        <i class="fa-solid fa-angle-right"></i>
+                    </div>
+                </div>
+
+                <!-- 商家1 -->
+                <div class="merchant-group">
+                    <div class="merchant-header">
+                        <div class="merchant-info">
+                            <i class="fa-solid fa-store"></i>
+                            <span class="merchant-name">示例商家1</span>
+                        </div>
+                        <div class="merchant-actions">
+                            <span class="select-all-btn" onclick="selectAllMerchant('merchant1')">全选</span>
+                        </div>
+                    </div>
+
+                    <div class="cart-items">
+                        <div class="cart-item" data-id="item1" data-merchant="merchant1">
+                            <div class="item-select">
+                                <input type="checkbox" class="item-checkbox" checked>
+                            </div>
+                            <div class="item-image">
+                                <img src="product.jpg" alt="商品图片">
+                            </div>
+                            <div class="item-info">
+                                <div class="item-name">示例电商商品名称，这是一个较长的商品名称</div>
+                                <div class="item-spec">规格：红色/42码</div>
+                                <div class="item-price">¥99.00</div>
+                            </div>
+                            <div class="item-actions">
+                                <div class="quantity-control">
+                                    <button class="quantity-btn minus" onclick="changeQuantity('item1', -1)">-</button>
+                                    <span class="quantity">1</span>
+                                    <button class="quantity-btn plus" onclick="changeQuantity('item1', 1)">+</button>
+                                </div>
+                                <button class="delete-btn" onclick="deleteItem('item1')">删除</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 商家2 -->
+                <div class="merchant-group">
+                    <div class="merchant-header">
+                        <div class="merchant-info">
+                            <i class="fa-solid fa-store"></i>
+                            <span class="merchant-name">示例商家2</span>
+                        </div>
+                        <div class="merchant-actions">
+                            <span class="select-all-btn" onclick="selectAllMerchant('merchant2')">全选</span>
+                        </div>
+                    </div>
+
+                    <div class="cart-items">
+                        <div class="cart-item" data-id="item2" data-merchant="merchant2">
+                            <div class="item-select">
+                                <input type="checkbox" class="item-checkbox" checked>
+                            </div>
+                            <div class="item-image">
+                                <img src="product2.jpg" alt="商品图片">
+                            </div>
+                            <div class="item-info">
+                                <div class="item-name">示例电商商品名称2</div>
+                                <div class="item-spec">规格：蓝色/L码</div>
+                                <div class="item-price">¥79.00</div>
+                            </div>
+                            <div class="item-actions">
+                                <div class="quantity-control">
+                                    <button class="quantity-btn minus" onclick="changeQuantity('item2', -1)">-</button>
+                                    <span class="quantity">2</span>
+                                    <button class="quantity-btn plus" onclick="changeQuantity('item2', 1)">+</button>
+                                </div>
+                                <button class="delete-btn" onclick="deleteItem('item2')">删除</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 到店类商品 -->
+            <div class="cart-section">
+                <div class="section-header">
+                    <div class="section-title">
+                        <i class="fa-solid fa-utensils"></i>
+                        <span>到店自提</span>
+                    </div>
+                    <div class="section-total">
+                        <span>共1件商品</span>
+                        <i class="fa-solid fa-angle-right"></i>
+                    </div>
+                </div>
+
+                <div class="merchant-group">
+                    <div class="merchant-header">
+                        <div class="merchant-info">
+                            <i class="fa-solid fa-store"></i>
+                            <span class="merchant-name">示例餐厅</span>
+                        </div>
+                        <div class="merchant-actions">
+                            <span class="select-all-btn" onclick="selectAllMerchant('merchant3')">全选</span>
+                        </div>
+                    </div>
+
+                    <div class="cart-items">
+                        <div class="cart-item" data-id="item3" data-merchant="merchant3">
+                            <div class="item-select">
+                                <input type="checkbox" class="item-checkbox" checked>
+                            </div>
+                            <div class="item-image">
+                                <img src="product3.jpg" alt="商品图片">
+                            </div>
+                            <div class="item-info">
+                                <div class="item-name">示例餐品名称</div>
+                                <div class="item-spec">规格：大份/微辣</div>
+                                <div class="item-price">¥28.00</div>
+                            </div>
+                            <div class="item-actions">
+                                <div class="quantity-control">
+                                    <button class="quantity-btn minus" onclick="changeQuantity('item3', -1)">-</button>
+                                    <span class="quantity">1</span>
+                                    <button class="quantity-btn plus" onclick="changeQuantity('item3', 1)">+</button>
+                                </div>
+                                <button class="delete-btn" onclick="deleteItem('item3')">删除</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 团购类商品 -->
+            <div class="cart-section">
+                <div class="section-header">
+                    <div class="section-title">
+                        <i class="fa-solid fa-tag"></i>
+                        <span>团购商品</span>
+                    </div>
+                    <div class="section-total">
+                        <span>共1件商品</span>
+                        <i class="fa-solid fa-angle-right"></i>
+                    </div>
+                </div>
+
+                <div class="merchant-group">
+                    <div class="merchant-header">
+                        <div class="merchant-info">
+                            <i class="fa-solid fa-store"></i>
+                            <span class="merchant-name">示例团购商家</span>
+                        </div>
+                        <div class="merchant-actions">
+                            <span class="select-all-btn" onclick="selectAllMerchant('merchant4')">全选</span>
+                        </div>
+                    </div>
+
+                    <div class="cart-items">
+                        <div class="cart-item" data-id="item4" data-merchant="merchant4">
+                            <div class="item-select">
+                                <input type="checkbox" class="item-checkbox" checked>
+                            </div>
+                            <div class="item-image">
+                                <img src="product.jpg" alt="商品图片">
+                                <div class="group-buy-badge">团购</div>
+                            </div>
+                            <div class="item-info">
+                                <div class="item-name">示例团购商品名称</div>
+                                <div class="item-spec">规格：标准套餐</div>
+                                <div class="item-price">¥89.00</div>
+                            </div>
+                            <div class="item-actions">
+                                <div class="quantity-control">
+                                    <button class="quantity-btn minus" onclick="changeQuantity('item4', -1)">-</button>
+                                    <span class="quantity">1</span>
+                                    <button class="quantity-btn plus" onclick="changeQuantity('item4', 1)">+</button>
+                                </div>
+                                <button class="delete-btn" onclick="deleteItem('item4')">删除</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 购物车底部 -->
+        <div class="cart-footer">
+            <div class="cart-summary">
+                <div class="select-all">
+                    <input type="checkbox" id="selectAll" checked>
+                    <label for="selectAll">全选</label>
+                </div>
+                <div class="total-info">
+                    <div class="total-price">
+                        合计：<span class="price">¥295.00</span>
+                    </div>
+                    <div class="total-desc">不含运费</div>
+                </div>
+            </div>
+            <div class="cart-actions">
+                <button class="settle-btn" onclick="settleCart()">结算(4)</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 我的页 -->
+    <div class="my-page" id="my" style="display: none;">
+        <!-- 用户信息区域 -->
+        <div class="user-info-section">
+            <div class="user-info-content">
+                <div class="user-avatar">
+                    <img src="avatar.jpg" alt="用户头像">
+                </div>
+                <div class="user-details">
+                    <div class="user-name">用户昵称</div>
+                    <div class="user-level">
+                        <span class="level-badge">VIP会员</span>
+                        <span class="level-desc">享受专属权益</span>
+                    </div>
+                </div>
+                <div class="user-actions">
+                    <i class="fa-solid fa-cog"></i>
+                </div>
+            </div>
+
+            <!-- 用户数据概览 -->
+            <div class="user-stats">
+                <div class="stat-item">
+                    <div class="stat-number">1280</div>
+                    <div class="stat-label">积分</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">优惠券</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">¥256.80</div>
+                    <div class="stat-label">余额</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 功能菜单区域 -->
+        <div class="menu-section">
+            <!-- 我的订单 -->
+            <div class="menu-group">
+                <div class="menu-group-title">
+                    我的订单
+                    <div class="view-all">
+                        <span>全部订单</span>
+                        <i class="fa-solid fa-angle-right"></i>
+                    </div>
+                </div>
+                <div class="menu-order-grid">
+                    <!-- 订单类型切换 -->
+                    <div class="order-tabs">
+                        <div class="order-tab action" data-type="ecommerce">
+                            <span>电商</span>
+                        </div>
+                        <div class="order-tab" data-type="takeout">
+                            <span>到店</span>
+                        </div>
+                        <div class="order-tab" data-type="groupbuy">
+                            <span>团购</span>
+                        </div>
+                    </div>
+
+                    <!-- 订单状态 -->
+                    <div class="order-status-grid">
+                        <!-- 电商订单状态 -->
+                        <div class="order-status-item ecommerce-status" data-status="pending-payment"
+                            data-type="ecommerce">
+                            <div class="status-icon">
+                                <i class="fa-solid fa-credit-card"></i>
+                                <span class="badge">2</span>
+                            </div>
+                            <span class="status-label">待付款</span>
+                        </div>
+                        <div class="order-status-item ecommerce-status" data-status="pending-shipment"
+                            data-type="ecommerce">
+                            <div class="status-icon">
+                                <i class="fa-solid fa-truck"></i>
+                                <span class="badge">1</span>
+                            </div>
+                            <span class="status-label">待发货</span>
+                        </div>
+                        <div class="order-status-item ecommerce-status" data-status="pending-delivery"
+                            data-type="ecommerce">
+                            <div class="status-icon">
+                                <i class="fa-solid fa-box"></i>
+                            </div>
+                            <span class="status-label">待收货</span>
+                        </div>
+                        <div class="order-status-item ecommerce-status" data-status="pending-review"
+                            data-type="ecommerce">
+                            <div class="status-icon">
+                                <i class="fa-solid fa-comment"></i>
+                            </div>
+                            <span class="status-label">待评价</span>
+                        </div>
+                        <div class="order-status-item ecommerce-status" data-status="refund" data-type="ecommerce">
+                            <div class="status-icon">
+                                <i class="fa-solid fa-rotate-left"></i>
+                            </div>
+                            <span class="status-label">退款/售后</span>
+                        </div>
+
+                        <!-- 到店订单状态 -->
+                        <div class="order-status-item takeout-status" data-status="pending-payment" data-type="takeout">
+                            <div class="status-icon">
+                                <i class="fa-solid fa-credit-card"></i>
+                            </div>
+                            <span class="status-label">待付款</span>
+                        </div>
+                        <div class="order-status-item takeout-status" data-status="pending-pickup" data-type="takeout">
+                            <div class="status-icon">
+                                <i class="fa-solid fa-store"></i>
+                                <span class="badge">1</span>
+                            </div>
+                            <span class="status-label">待取餐</span>
+                        </div>
+                        <div class="order-status-item takeout-status" data-status="pending-review" data-type="takeout">
+                            <div class="status-icon">
+                                <i class="fa-solid fa-comment"></i>
+                            </div>
+                            <span class="status-label">待评价</span>
+                        </div>
+                        <div class="order-status-item takeout-status" data-status="refund" data-type="takeout">
+                            <div class="status-icon">
+                                <i class="fa-solid fa-rotate-left"></i>
+                            </div>
+                            <span class="status-label">退款/售后</span>
+                        </div>
+
+                        <!-- 团购订单状态 -->
+                        <div class="order-status-item groupbuy-status" data-status="pending-payment"
+                            data-type="groupbuy">
+                            <div class="status-icon">
+                                <i class="fa-solid fa-credit-card"></i>
+                            </div>
+                            <span class="status-label">待付款</span>
+                        </div>
+                        <div class="order-status-item groupbuy-status" data-status="group-success" data-type="groupbuy">
+                            <div class="status-icon">
+                                <i class="fa-solid fa-store"></i>
+                                <span class="badge">2</span>
+                            </div>
+                            <span class="status-label">待使用</span>
+                        </div>
+                        <div class="order-status-item groupbuy-status" data-status="pending-review"
+                            data-type="groupbuy">
+                            <div class="status-icon">
+                                <i class="fa-solid fa-comment"></i>
+                                <span class="badge">1</span>
+                            </div>
+                            <span class="status-label">待评价</span>
+                        </div>
+                        <div class="order-status-item groupbuy-status" data-status="refund" data-type="groupbuy">
+                            <div class="status-icon">
+                                <i class="fa-solid fa-rotate-left"></i>
+                            </div>
+                            <span class="status-label">退款/售后</span>
+                        </div>
+                    </div>
+
+                    <!-- 订单列表预览 -->
+                    <div class="order-preview">
+                        <div class="preview-header">
+                            <span class="preview-title">最近订单</span>
+                            <span class="preview-count">共8笔订单</span>
+                        </div>
+
+                        <!-- 电商订单示例 -->
+                        <div class="order-item" data-type="ecommerce">
+                            <div class="order-item-header">
+                                <div class="order-type-tag ecommerce">电商订单</div>
+                                <div class="order-status pending-payment">待付款</div>
+                            </div>
+                            <div class="order-item-content">
+                                <img src="product.jpg" alt="商品图片" class="order-product-img">
+                                <div class="order-info">
+                                    <div class="order-title">示例电商商品名称</div>
+                                    <div class="order-spec">规格：红色/42码</div>
+                                    <div class="order-price">¥99.00 × 1</div>
+                                </div>
+                                <div class="order-actions">
+                                    <button class="action-btn primary">立即付款</button>
+                                    <button class="action-btn secondary">取消订单</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 电商订单示例2 -->
+                        <div class="order-item" data-type="ecommerce">
+                            <div class="order-item-header">
+                                <div class="order-type-tag ecommerce">电商订单</div>
+                                <div class="order-status pending-shipment">待发货</div>
+                            </div>
+                            <div class="order-item-content">
+                                <img src="product2.jpg" alt="商品图片" class="order-product-img">
+                                <div class="order-info">
+                                    <div class="order-title">示例电商商品名称2</div>
+                                    <div class="order-spec">规格：蓝色/L码</div>
+                                    <div class="order-price">¥79.00 × 2</div>
+                                </div>
+                                <div class="order-actions">
+                                    <button class="action-btn primary">查看物流</button>
+                                    <button class="action-btn secondary">联系客服</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 到店订单示例 -->
+                        <div class="order-item" data-type="takeout">
+                            <div class="order-item-header">
+                                <div class="order-type-tag takeout">到店自提</div>
+                                <div class="order-status pending-pickup">待取餐</div>
+                            </div>
+                            <div class="order-item-content">
+                                <img src="product3.jpg" alt="商品图片" class="order-product-img">
+                                <div class="order-info">
+                                    <div class="order-title">示例餐品名称</div>
+                                    <div class="order-spec">规格：大份/微辣</div>
+                                    <div class="order-price">¥28.00 × 1</div>
+                                </div>
+                                <div class="order-actions">
+                                    <button class="action-btn primary">查看取餐码</button>
+                                    <button class="action-btn secondary">联系商家</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 到店订单示例2 -->
+                        <div class="order-item" data-type="takeout">
+                            <div class="order-item-header">
+                                <div class="order-type-tag takeout">到店自提</div>
+                                <div class="order-status pending-review">待评价</div>
+                            </div>
+                            <div class="order-item-content">
+                                <img src="product3.jpg" alt="商品图片" class="order-product-img">
+                                <div class="order-info">
+                                    <div class="order-title">示例餐品名称2</div>
+                                    <div class="order-spec">规格：小份/不辣</div>
+                                    <div class="order-price">¥18.00 × 1</div>
+                                </div>
+                                <div class="order-actions">
+                                    <button class="action-btn primary">立即评价</button>
+                                    <button class="action-btn secondary">再次购买</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 团购订单示例 -->
+                        <div class="order-item" data-type="groupbuy">
+                            <div class="order-item-header">
+                                <div class="order-type-tag groupbuy">团购订单</div>
+                                <div class="order-status group-success">团购成功</div>
+                            </div>
+                            <div class="order-item-content">
+                                <img src="product.jpg" alt="商品图片" class="order-product-img">
+                                <div class="order-info">
+                                    <div class="order-title">示例团购商品名称</div>
+                                    <div class="order-spec">规格：标准套餐</div>
+                                    <div class="order-price">¥89.00 × 1</div>
+                                </div>
+                                <div class="order-actions">
+                                    <button class="action-btn primary">查看详情</button>
+                                    <button class="action-btn secondary">申请退款</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 团购订单示例2 -->
+                        <div class="order-item" data-type="groupbuy">
+                            <div class="order-item-header">
+                                <div class="order-type-tag groupbuy">团购订单</div>
+                                <div class="order-status group-forming">拼团中</div>
+                            </div>
+                            <div class="order-item-content">
+                                <img src="product2.jpg" alt="商品图片" class="order-product-img">
+                                <div class="order-info">
+                                    <div class="order-title">示例团购商品名称2</div>
+                                    <div class="order-spec">规格：豪华套餐</div>
+                                    <div class="order-price">¥129.00 × 1</div>
+                                </div>
+                                <div class="order-actions">
+                                    <button class="action-btn primary">邀请好友</button>
+                                    <button class="action-btn secondary">取消拼团</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 团购订单示例3 -->
+                        <div class="order-item" data-type="groupbuy">
+                            <div class="order-item-header">
+                                <div class="order-type-tag groupbuy">团购订单</div>
+                                <div class="order-status group-failed">拼团失败</div>
+                            </div>
+                            <div class="order-item-content">
+                                <img src="product3.jpg" alt="商品图片" class="order-product-img">
+                                <div class="order-info">
+                                    <div class="order-title">示例团购商品名称3</div>
+                                    <div class="order-spec">规格：特惠套餐</div>
+                                    <div class="order-price">¥59.00 × 1</div>
+                                </div>
+                                <div class="order-actions">
+                                    <button class="action-btn primary">重新拼团</button>
+                                    <button class="action-btn secondary">申请退款</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 我的服务 -->
+            <div class="menu-group">
+                <div class="menu-group-title">我的服务</div>
+                <div class="menu-grid">
+                    <div class="my-menu-item">
+                        <div class="menu-icon">
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <span class="menu-label">我的收藏</span>
+                    </div>
+                    <div class="my-menu-item">
+                        <div class="menu-icon">
+                            <i class="fa-solid fa-map-marker-alt"></i>
+                        </div>
+                        <span class="menu-label">收货地址</span>
+                    </div>
+                    <div class="my-menu-item">
+                        <div class="menu-icon">
+                            <i class="fa-solid fa-headset"></i>
+                        </div>
+                        <span class="menu-label">客服中心</span>
+                    </div>
+                    <div class="my-menu-item">
+                        <div class="menu-icon">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <span class="menu-label">隐私设置</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 会员服务 -->
+            <div class="menu-group">
+                <div class="menu-group-title">会员服务</div>
+                <div class="menu-list">
+                    <div class="menu-list-item">
+                        <div class="menu-item-left">
+                            <div class="menu-icon">
+                                <i class="fa-solid fa-crown"></i>
+                            </div>
+                            <span class="menu-label">会员中心</span>
+                        </div>
+                        <div class="menu-item-right">
+                            <span class="menu-desc">享受专属权益</span>
+                            <i class="fa-solid fa-angle-right"></i>
+                        </div>
+                    </div>
+                    <div class="menu-list-item">
+                        <div class="menu-item-left">
+                            <div class="menu-icon">
+                                <i class="fa-solid fa-ticket"></i>
+                            </div>
+                            <span class="menu-label">优惠券</span>
+                        </div>
+                        <div class="menu-item-right">
+                            <span class="menu-desc">5张可用</span>
+                            <i class="fa-solid fa-angle-right"></i>
+                        </div>
+                    </div>
+                    <div class="menu-list-item">
+                        <div class="menu-item-left">
+                            <div class="menu-icon">
+                                <i class="fa-solid fa-coins"></i>
+                            </div>
+                            <span class="menu-label">积分商城</span>
+                        </div>
+                        <div class="menu-item-right">
+                            <span class="menu-desc">1280积分</span>
+                            <i class="fa-solid fa-angle-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 其他服务 -->
+            <div class="menu-group">
+                <div class="menu-group-title">其他服务</div>
+                <div class="menu-list">
+                    <div class="menu-list-item">
+                        <div class="menu-item-left">
+                            <div class="menu-icon">
+                                <i class="fa-solid fa-wallet"></i>
+                            </div>
+                            <span class="menu-label">我的钱包</span>
+                        </div>
+                        <div class="menu-item-right">
+                            <span class="menu-desc">¥256.80</span>
+                            <i class="fa-solid fa-angle-right"></i>
+                        </div>
+                    </div>
+                    <div class="menu-list-item">
+                        <div class="menu-item-left">
+                            <div class="menu-icon">
+                                <i class="fa-solid fa-gift"></i>
+                            </div>
+                            <span class="menu-label">邀请好友</span>
+                        </div>
+                        <div class="menu-item-right">
+                            <span class="menu-desc">赚积分</span>
+                            <i class="fa-solid fa-angle-right"></i>
+                        </div>
+                    </div>
+                    <div class="menu-list-item">
+                        <div class="menu-item-left">
+                            <div class="menu-icon">
+                                <i class="fa-solid fa-question-circle"></i>
+                            </div>
+                            <span class="menu-label">帮助中心</span>
+                        </div>
+                        <div class="menu-item-right">
+                            <i class="fa-solid fa-angle-right"></i>
+                        </div>
+                    </div>
+                    <div class="menu-list-item">
+                        <div class="menu-item-left">
+                            <div class="menu-icon">
+                                <i class="fa-solid fa-info-circle"></i>
+                            </div>
+                            <span class="menu-label">关于我们</span>
+                        </div>
+                        <div class="menu-item-right">
+                            <i class="fa-solid fa-angle-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部菜单 -->
+    <div class="bottom-menu">
+        <a href="#home" class="menu-item active" onclick="showPage('home')">
+            <i class="fa-solid fa-house"></i>
+            <span>首页</span>
+        </a>
+        <a href="#category" class="menu-item" onclick="showPage('category')">
+            <i class="fa-solid fa-list"></i>
+            <span>分类</span>
+        </a>
+        <a href="#cart" class="menu-item" onclick="showPage('cart')">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span>购物车</span>
+        </a>
+        <a href="#my" class="menu-item" onclick="showPage('my')">
+            <i class="fa-solid fa-user"></i>
+            <span>我的</span>
+        </a>
+    </div>
+
+    <script>
+        function showCategory(categoryType) {
+            const categoryItems = document.querySelectorAll('.category-item');
+            const leftCategoryItems = document.querySelectorAll('.left-category li');
+
+            leftCategoryItems.forEach(item => {
+                item.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            categoryItems.forEach(item => {
+                const onclickAttr = item.getAttribute('onclick');
+                if (onclickAttr && onclickAttr.includes(categoryType)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        function goToSubCategory(mainCategory, subCategory) {
+            // 这里可以添加跳转到二级页面的逻辑
+            alert(`您点击了 ${mainCategory} 下的 ${subCategory} 分类`);
+        }
+
+        function goToGroupBuyDetail() {
+            window.location.href = 'group-buy-detail.html';
+        }
+
+        function goToProductDetail() {
+            window.location.href = 'product-detail.html';
+        }
+
+        function goToSearchPage(eid) {
+            const searchInput = document.getElementById(eid);
+            const keyword = encodeURIComponent(searchInput.value);
+            window.location.href = `search.html?keyword=${keyword}`;
+        }
+
+        // 图片轮播逻辑
+        const slides = document.querySelectorAll('.carousel-slides img');
+        const dotsContainer = document.querySelector('.carousel-dots');
+        let currentSlide = 0;
+        let slideInterval;
+
+        // 创建导航点
+        slides.forEach((_, index) => {
+            const dot = document.createElement('div');
+            dot.classList.add('carousel-dot');
+            if (index === 0) {
+                dot.classList.add('active');
+            }
+            dot.addEventListener('click', () => {
+                goToSlide(index);
+            });
+            dotsContainer.appendChild(dot);
+        });
+
+        const dots = document.querySelectorAll('.carousel-dot');
+
+        // 切换到指定幻灯片
+        function goToSlide(slideIndex) {
+            slides[currentSlide].style.display = 'none';
+            dots[currentSlide].classList.remove('active');
+            currentSlide = slideIndex;
+            slides[currentSlide].style.display = 'block';
+            dots[currentSlide].classList.add('active');
+        }
+
+        // 切换到下一张幻灯片
+        function nextSlide() {
+            const nextIndex = (currentSlide + 1) % slides.length;
+            goToSlide(nextIndex);
+        }
+
+        // 切换到上一张幻灯片
+        function prevSlide() {
+            const prevIndex = (currentSlide - 1 + slides.length) % slides.length;
+            goToSlide(prevIndex);
+        }
+
+        // 自动轮播
+        function startSlideShow() {
+            slideInterval = setInterval(nextSlide, 5000);
+        }
+
+        // 停止自动轮播
+        function stopSlideShow() {
+            clearInterval(slideInterval);
+        }
+
+        // 初始化幻灯片显示
+        slides.forEach((slide, index) => {
+            slide.style.display = index === 0 ? 'block' : 'none';
+        });
+
+        // 鼠标悬停时停止自动轮播
+        const carouselContainer = document.querySelector('.carousel-container');
+        carouselContainer.addEventListener('mouseenter', stopSlideShow);
+        carouselContainer.addEventListener('mouseleave', startSlideShow);
+
+        // 启动自动轮播
+        startSlideShow();
+
+        // 页面显示时初始化对应功能
+        function showPage(pageId) {
+            const pages = ['home', 'category', 'cart', 'my'];
+            const menuItems = document.querySelectorAll('.menu-item');
+
+            pages.forEach(id => {
+                document.getElementById(id).style.display = id === pageId ? 'block' : 'none';
+            });
+
+            menuItems.forEach(item => {
+                const onclickAttr = item.getAttribute('onclick');
+                if (onclickAttr && onclickAttr.includes(pageId)) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+
+            // 如果是我的页面，初始化交互功能
+            if (pageId === 'my') {
+                setTimeout(initMyPage, 100);
+            }
+        }
+
+        // 购物车相关变量
+        let cartItems = {
+            item1: { id: 'item1', merchant: 'merchant1', name: '示例电商商品名称，这是一个较长的商品名称', price: 99.00, quantity: 1, selected: true },
+            item2: { id: 'item2', merchant: 'merchant2', name: '示例电商商品名称2', price: 79.00, quantity: 2, selected: true },
+            item3: { id: 'item3', merchant: 'merchant3', name: '示例餐品名称', price: 28.00, quantity: 1, selected: true },
+            item4: { id: 'item4', merchant: 'merchant4', name: '示例团购商品名称', price: 89.00, quantity: 1, selected: true }
+        };
+
+        let isEditMode = false;
+
+        // 切换编辑模式
+        function toggleEditMode() {
+            isEditMode = !isEditMode;
+            const editBtn = document.querySelector('.edit-btn');
+            const deleteBtns = document.querySelectorAll('.delete-btn');
+            const settleBtn = document.querySelector('.settle-btn');
+
+            if (isEditMode) {
+                editBtn.textContent = '完成';
+                deleteBtns.forEach(btn => btn.style.display = 'block');
+                settleBtn.textContent = '删除选中';
+                settleBtn.style.backgroundColor = '#ff5000';
+            } else {
+                editBtn.textContent = '编辑';
+                deleteBtns.forEach(btn => btn.style.display = 'none');
+                settleBtn.textContent = '结算(' + getSelectedCount() + ')';
+                settleBtn.style.backgroundColor = '';
+            }
+        }
+
+        // 修改商品数量
+        function changeQuantity(itemId, delta) {
+            const item = cartItems[itemId];
+            const newQuantity = item.quantity + delta;
+
+            if (newQuantity < 1) {
+                if (confirm('确定要删除这个商品吗？')) {
+                    deleteItem(itemId);
+                }
+                return;
+            }
+
+            item.quantity = newQuantity;
+            updateQuantityDisplay(itemId, newQuantity);
+            updateCartSummary();
+        }
+
+        // 更新数量显示
+        function updateQuantityDisplay(itemId, quantity) {
+            const quantityElement = document.querySelector(`[data-id="${itemId}"] .quantity`);
+            if (quantityElement) {
+                quantityElement.textContent = quantity;
+            }
+        }
+
+        // 删除商品
+        function deleteItem(itemId) {
+            if (confirm('确定要删除这个商品吗？')) {
+                delete cartItems[itemId];
+                const itemElement = document.querySelector(`[data-id="${itemId}"]`);
+                if (itemElement) {
+                    itemElement.remove();
+                }
+                updateCartSummary();
+            }
+        }
+
+        // 选择/取消选择商品
+        function toggleItemSelection(itemId) {
+            const item = cartItems[itemId];
+            if (item) {
+                item.selected = !item.selected;
+                updateCartSummary();
+            }
+        }
+
+        // 选择/取消选择商家所有商品
+        function selectAllMerchant(merchantId) {
+            const merchantItems = Object.values(cartItems).filter(item => item.merchant === merchantId);
+            const allSelected = merchantItems.every(item => item.selected);
+
+            merchantItems.forEach(item => {
+                item.selected = !allSelected;
+            });
+
+            updateCheckboxes();
+            updateCartSummary();
+        }
+
+        // 全选/取消全选
+        function toggleSelectAll() {
+            const selectAllCheckbox = document.getElementById('selectAll');
+            const allSelected = selectAllCheckbox.checked;
+
+            Object.values(cartItems).forEach(item => {
+                item.selected = allSelected;
+            });
+
+            updateCheckboxes();
+            updateCartSummary();
+        }
+
+        // 更新复选框状态
+        function updateCheckboxes() {
+            Object.values(cartItems).forEach(item => {
+                const checkbox = document.querySelector(`[data-id="${item.id}"] .item-checkbox`);
+                if (checkbox) {
+                    checkbox.checked = item.selected;
+                }
+            });
+        }
+
+        // 获取选中商品数量
+        function getSelectedCount() {
+            return Object.values(cartItems).filter(item => item.selected).length;
+        }
+
+        // 计算选中商品总价
+        function getSelectedTotal() {
+            return Object.values(cartItems)
+                .filter(item => item.selected)
+                .reduce((total, item) => total + (item.price * item.quantity), 0);
+        }
+
+        // 更新购物车摘要
+        function updateCartSummary() {
+            const selectedCount = getSelectedCount();
+            const totalPrice = getSelectedTotal();
+
+            const totalPriceElement = document.querySelector('.total-price .price');
+            const settleBtn = document.querySelector('.settle-btn');
+
+            if (totalPriceElement) {
+                totalPriceElement.textContent = '¥' + totalPrice.toFixed(2);
+            }
+
+            if (settleBtn && !isEditMode) {
+                settleBtn.textContent = '结算(' + selectedCount + ')';
+            }
+
+            // 更新全选复选框状态
+            const selectAllCheckbox = document.getElementById('selectAll');
+            const allItems = Object.values(cartItems);
+            const allSelected = allItems.length > 0 && allItems.every(item => item.selected);
+            selectAllCheckbox.checked = allSelected;
+        }
+
+        // 结算购物车
+        function settleCart() {
+            if (isEditMode) {
+                // 编辑模式：删除选中商品
+                const selectedItems = Object.values(cartItems).filter(item => item.selected);
+                if (selectedItems.length === 0) {
+                    alert('请选择要删除的商品');
+                    return;
+                }
+
+                if (confirm(`确定要删除选中的${selectedItems.length}件商品吗？`)) {
+                    selectedItems.forEach(item => {
+                        delete cartItems[item.id];
+                        const itemElement = document.querySelector(`[data-id="${item.id}"]`);
+                        if (itemElement) {
+                            itemElement.remove();
+                        }
+                    });
+                    updateCartSummary();
+                    toggleEditMode(); // 退出编辑模式
+                }
+            } else {
+                // 正常模式：结算
+                const selectedItems = Object.values(cartItems).filter(item => item.selected);
+                if (selectedItems.length === 0) {
+                    alert('请选择要结算的商品');
+                    return;
+                }
+
+                // 按商家分组
+                const merchantGroups = {};
+                selectedItems.forEach(item => {
+                    if (!merchantGroups[item.merchant]) {
+                        merchantGroups[item.merchant] = [];
+                    }
+                    merchantGroups[item.merchant].push(item);
+                });
+
+                // 这里可以跳转到结算页面
+                console.log('结算商品：', merchantGroups);
+                alert('跳转到结算页面...');
+            }
+        }
+
+        // 我的页面交互功能
+        function initMyPage() {
+            // 绑定订单类型切换事件
+            document.querySelectorAll('.order-tab').forEach(tab => {
+                tab.addEventListener('click', function () {
+                    const orderType = this.getAttribute('data-type');
+                    switchOrderType(orderType);
+                });
+            });
+
+            // 绑定订单状态点击事件
+            document.querySelectorAll('.order-status-item').forEach(item => {
+                item.addEventListener('click', function () {
+                    const status = this.getAttribute('data-status');
+                    filterOrdersByStatus(status);
+                });
+            });
+
+            // 绑定订单项点击事件
+            document.querySelectorAll('.order-item').forEach(item => {
+                item.addEventListener('click', function (e) {
+                    // 如果点击的是按钮，不触发订单详情
+                    if (e.target.classList.contains('action-btn')) {
+                        return;
+                    }
+                    const orderType = this.getAttribute('data-type');
+                    const orderTitle = this.querySelector('.order-title').textContent;
+                    console.log('查看订单详情：', orderType, orderTitle);
+                    alert(`查看${orderTitle}订单详情`);
+                });
+            });
+
+            // 绑定订单操作按钮事件
+            document.querySelectorAll('.action-btn').forEach(btn => {
+                btn.addEventListener('click', function (e) {
+                    e.stopPropagation(); // 阻止事件冒泡
+                    const action = this.textContent;
+                    const orderItem = this.closest('.order-item');
+                    const orderType = orderItem.getAttribute('data-type');
+                    const orderTitle = orderItem.querySelector('.order-title').textContent;
+
+                    console.log('订单操作：', action, orderType, orderTitle);
+                    handleOrderAction(action, orderType, orderTitle);
+                });
+            });
+
+            // 绑定查看全部订单事件
+            const viewAllOrders = document.querySelector('.view-all');
+            if (viewAllOrders) {
+                viewAllOrders.addEventListener('click', function () {
+                    console.log('查看全部订单');
+                    alert('跳转到全部订单页面');
+                });
+            }
+
+            // 绑定设置按钮事件
+            const settingsBtn = document.querySelector('.user-actions i');
+            if (settingsBtn) {
+                settingsBtn.addEventListener('click', function () {
+                    console.log('打开设置页面');
+                    alert('跳转到设置页面');
+                });
+            }
+
+            // 绑定菜单项点击事件
+            document.querySelectorAll('.my-menu-item, .menu-list-item').forEach(item => {
+                item.addEventListener('click', function () {
+                    const label = this.querySelector('.menu-label').textContent;
+                    console.log('点击了菜单项：', label);
+                    // 这里可以跳转到对应的功能页面
+                    alert(`跳转到${label}页面`);
+                });
+            });
+
+            // 初始化订单类型切换功能
+            initializeOrderTypeSwitch();
+        }
+
+        // 初始化订单类型切换功能
+        function initializeOrderTypeSwitch() {
+            // 默认显示全部订单
+            const defaultOrderType = 'ecommerce';
+
+            // 设置默认选中的标签
+            const defaultTab = document.querySelector(`.order-tab[data-type="${defaultOrderType}"]`);
+            if (defaultTab) {
+                defaultTab.classList.add('active');
+            }
+
+            // 初始化订单状态显示
+            switchOrderType(defaultOrderType);
+
+            // 添加切换动画效果
+            document.querySelectorAll('.order-tab').forEach(tab => {
+                tab.addEventListener('click', function () {
+                    // 添加点击反馈效果
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 150);
+                });
+            });
+        }
+
+        // 切换订单类型
+        function switchOrderType(orderType) {
+            // 更新标签状态
+            document.querySelectorAll('.order-tab').forEach(tab => {
+                tab.classList.toggle('active', tab.getAttribute('data-type') === orderType);
+            });
+
+            // 筛选订单项
+            document.querySelectorAll('.order-item').forEach(item => {
+                const itemType = item.getAttribute('data-type');
+                if (orderType === 'all' || itemType === orderType) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            // 筛选订单状态项
+            document.querySelectorAll('.order-status-item').forEach(statusItem => {
+                const statusType = statusItem.getAttribute('data-type');
+                if (orderType === 'all') {
+                    // 全部订单时显示所有状态
+                    statusItem.style.display = 'flex';
+                } else if (statusType === orderType || statusType === 'all') {
+                    // 显示对应类型的状态和通用状态
+                    statusItem.style.display = 'flex';
+                } else {
+                    // 隐藏其他类型的状态
+                    statusItem.style.display = 'none';
+                }
+            });
+
+            // 更新订单数量显示
+            updateOrderCount(orderType);
+
+            // 更新订单状态数量
+            updateStatusCount(orderType);
+        }
+
+        // 按状态筛选订单
+        function filterOrdersByStatus(status) {
+            console.log('筛选订单状态：', status);
+
+            // 获取当前选中的订单类型
+            const activeTab = document.querySelector('.order-tab.active');
+            const currentOrderType = activeTab ? activeTab.getAttribute('data-type') : 'all';
+
+            // 这里可以根据状态筛选订单
+            // 实际应用中会调用API获取对应状态的订单
+            const statusLabel = getStatusLabel(status);
+            const typeLabel = getOrderTypeLabel(currentOrderType);
+            alert(`筛选${typeLabel}订单中的${statusLabel}状态`);
+        }
+
+        // 获取订单类型标签
+        function getOrderTypeLabel(orderType) {
+            const typeMap = {
+                'ecommerce': '电商',
+                'takeout': '到店',
+                'groupbuy': '团购'
+            };
+            return typeMap[orderType] || orderType;
+        }
+
+        // 获取状态标签
+        function getStatusLabel(status) {
+            const statusMap = {
+                'pending-payment': '待付款',
+                'pending-shipment': '待发货',
+                'pending-delivery': '待收货',
+                'pending-pickup': '待取餐',
+                'pending-review': '待评价',
+                'group-forming': '拼团中',
+                'group-success': '拼团成功',
+                'group-failed': '拼团失败',
+                'refund': '退款/售后'
+            };
+            return statusMap[status] || status;
+        }
+
+        // 更新订单状态数量显示
+        function updateStatusCount(orderType) {
+            // 根据订单类型更新状态项的显示数量
+            const statusItems = document.querySelectorAll('.order-status-item');
+            let visibleCount = 0;
+
+            statusItems.forEach(item => {
+                const statusType = item.getAttribute('data-type');
+                if (orderType === 'all') {
+                    visibleCount++;
+                } else if (statusType === orderType || statusType === 'all') {
+                    visibleCount++;
+                }
+            });
+
+            // 调整订单状态网格的布局
+            // const statusGrid = document.querySelector('.order-status-grid');
+            // if (statusGrid) {
+            //     // 根据可见状态数量调整网格列数
+            //     if (visibleCount <= 4) {
+            //         statusGrid.style.gridTemplateColumns = 'repeat(4, 1fr)';
+            //     } else if (visibleCount <= 6) {
+            //         statusGrid.style.gridTemplateColumns = 'repeat(3, 1fr)';
+            //     } else {
+            //         statusGrid.style.gridTemplateColumns = 'repeat(4, 1fr)';
+            //     }
+            // }
+        }
+
+        // 处理订单操作
+        function handleOrderAction(action, orderType, orderTitle) {
+            switch (action) {
+                case '立即付款':
+                    alert(`跳转到${orderTitle}的支付页面`);
+                    break;
+                case '取消订单':
+                    if (confirm(`确定要取消订单"${orderTitle}"吗？`)) {
+                        alert('订单已取消');
+                    }
+                    break;
+                case '查看取餐码':
+                    alert(`显示${orderTitle}的取餐码：A123`);
+                    break;
+                case '联系商家':
+                    alert(`联系${orderTitle}的商家`);
+                    break;
+                case '查看详情':
+                    alert(`查看${orderTitle}的详细信息`);
+                    break;
+                case '申请退款':
+                    if (confirm(`确定要为"${orderTitle}"申请退款吗？`)) {
+                        alert('退款申请已提交');
+                    }
+                    break;
+                default:
+                    alert(`执行操作：${action}`);
+            }
+        }
+
+        // 更新订单数量显示
+        function updateOrderCount(orderType) {
+            const orderItems = document.querySelectorAll('.order-item');
+            let visibleCount = 0;
+
+            orderItems.forEach(item => {
+                const itemType = item.getAttribute('data-type');
+                if (orderType === 'all' || itemType === orderType) {
+                    visibleCount++;
+                }
+            });
+
+            const previewCount = document.querySelector('.preview-count');
+            if (previewCount) {
+                const typeLabel = orderType === 'all' ? '全部' :
+                    orderType === 'ecommerce' ? '电商' :
+                        orderType === 'takeout' ? '到店' : '团购';
+                previewCount.textContent = `共${visibleCount}笔${typeLabel}订单`;
+            }
+        }
+
+        // 绑定事件监听器
+        document.addEventListener('DOMContentLoaded', function () {
+            // 绑定商品选择事件
+            document.querySelectorAll('.item-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', function () {
+                    const itemId = this.closest('.cart-item').getAttribute('data-id');
+                    toggleItemSelection(itemId);
+                });
+            });
+
+            // 绑定全选事件
+            const selectAllCheckbox = document.getElementById('selectAll');
+            if (selectAllCheckbox) {
+                selectAllCheckbox.addEventListener('change', toggleSelectAll);
+            }
+
+            // 初始化购物车摘要
+            updateCartSummary();
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>仪表盘</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            background-color: #f0f2f5;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .dashboard-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .dashboard-section h2 {
+            margin-top: 0;
+            margin-bottom: 16px;
+            font-size: 18px;
+            color: #333;
+        }
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+        .data-card {
+            background-color: #e6f7ff;
+            border: 1px solid #91d5ff;
+            border-radius: 4px;
+            padding: 16px;
+            text-align: center;
+        }
+        .data-card .value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1890ff;
+            margin-bottom: 8px;
+        }
+        .data-card .label {
+            font-size: 14px;
+            color: #666;
+        }
+        .chart-placeholder {
+            background-color: #f0f2f5;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #999;
+            border-radius: 4px;
+            margin-top: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="dashboard-section">
+            <h2>交易数据</h2>
+            <p>展示商家交易金额汇总数据，支持近7天、近30天、近90天时间范围查询，并按支付方式分类展示。展示内容包括金额汇总、动销商家数、交易笔数。</p>
+            <div class="chart-container">交易数据图表占位符 (例如：柱状图、折线图)</div>
+            <p><strong>演示数据：</strong></p>
+            <ul>
+                <li>近7天交易金额：¥12,345.67</li>
+                <li>近30天交易金额：¥56,789.01</li>
+                <li>近90天交易金额：¥123,456.78</li>
+                <li>动销商家数：120</li>
+                <li>交易笔数：500</li>
+                <li>支付方式分布：微信支付 60%, 支付宝 30%, 银行卡 10%</li>
+            </ul>
+        </div>
+
+        <div class="dashboard-section">
+            <h2>商家数据</h2>
+            <p>展示商家注册、活跃、流失等数据，支持按时间范围查询。</p>
+            <div class="chart-container">商家数据图表占位符 (例如：折线图、饼图)</div>
+            <p><strong>演示数据：</strong></p>
+            <ul>
+                <li>新增注册商家：15</li>
+                <li>活跃商家：100</li>
+                <li>流失商家：5</li>
+            </ul>
+        </div>
+
+        <div class="dashboard-section">
+            <h2>产品数据</h2>
+            <p>展示产品销售、使用情况等数据。</p>
+            <div class="chart-container">产品数据图表占位符 (例如：柱状图、饼图)</div>
+            <p><strong>演示数据：</strong></p>
+            <ul>
+                <li>总产品数：50</li>
+                <li>活跃产品数：45</li>
+                <li>新上线产品数：3</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
