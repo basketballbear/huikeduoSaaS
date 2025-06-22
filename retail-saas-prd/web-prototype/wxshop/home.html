@@ -34,7 +34,7 @@
                 <div class="carousel-dots"></div>
             </div>
             <div class="function-nav">
-                <div class="nav-item">
+                <div class="nav-item" onclick="goToEcommerce()">
                     <i class="fa-solid fa-store"></i>
                     <span>电商</span>
                 </div>
@@ -889,6 +889,10 @@
 
         function goToProductDetail() {
             window.location.href = 'product-detail.html';
+        }
+
+        function goToEcommerce() {
+            window.location.href = 'ecommerce.html';
         }
 
         function goToSearchPage(eid) {
